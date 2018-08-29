@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+user=$1
+bes=$2
+date=`date '+%y-%g'`
+echo $((`cat ~/Documents/BES/"$user"/"$date"`+$bes)) > ~/Documents/BES/"$user"/"$date"

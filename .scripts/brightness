@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# stop xbacklight from gowing below 0
+
+
+level=$(xbacklight -get)
+direction=$1
+amount=$2
+
+
+if [ "$direction" == "dec" -a "$level" -le "$amount" ]; then
+	exec xbacklight -set 1
+else
+	exec xbacklight -$direction $amount
+fi
+
+

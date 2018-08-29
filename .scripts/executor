@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This script will compile or run another finishing operation on a document. I
+# have this script run via vim.
+#
+# all others: run `sent` to show a presentation
+
+oridir=$(pwd)
+
+file=$(readlink -f "$1")
+dir=$(dirname "$file")
+base="${file%.*}"
+filename="${1%.*}"
+cd $dir
+
+
+case "$file" in
+	*\.java) java "$filename" ;;
+esac
+cd $oridir
