@@ -9,8 +9,9 @@ s	~/.scripts
 cf	~/.config
 a	~/Archive
 c	~/Code
-f	~/Fontys
 wp	~/Wallpapers
 rp	~/Repos
-ino	~/Fontys/OpenIno
-vr	~/Repos/voidrice
+ft	~/Fontys
+oi	~/Fontys/OpenIno
+fn	~/Fontys/FUN
+se	~/Fontys/SEP
