@@ -41,11 +41,13 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
-     better-defaults
+     ;;     better-defaults
      emacs-lisp
      git
+     ranger
      markdown
      neotree
+     csharp
      org
      (shell :variables
             shell-default-height 30
@@ -56,10 +58,23 @@ This function should only modify configuration layer settings."
      ycmd
      html
      python
-     javascript
+     (javascript :variables
+                 javascript-backend 'lsp
+                 javascript-fmt-tool 'web-beautify)
      typescript
      java
-     latex
+     (latex :variables
+            latex-build-command "LaTeX"
+            latex-enable-auto-fill t
+            latex-enable-folding t
+            latex-enable-magic t
+            )
+     lsp
+     mu4e
+     slack
+     (wakatime :variables
+               wakatime-api-key "354cfbca-d8b4-48d0-bc59-cae5ebae91b6"
+               wakatime-cli-path "/usr/bin/wakatime")
      )
 
    ;; List of additional packages that will be installed without being
@@ -168,7 +183,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -177,7 +192,10 @@ It should only modify the values of Spacemacs settings."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (bookmarks . 5)
+                                (projects . 7)
+                                (agenda . 5)
+                                (todos . 5))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -193,6 +211,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
+                         monokai
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -333,7 +352,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil unicode symbols are displayed in the mode line.
    ;; If you use Emacs as a daemon and wants unicode characters only in GUI set
    ;; the value to quoted `display-graphic-p'. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
 
    ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
@@ -361,12 +380,12 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis 't
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -474,7 +493,30 @@ before packages are loaded."
   (setq company-idle-delay 0)
 
   (setq neo-theme (if (display-graphic-p) 'nerd 'ascii))
+
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  (add-hook 'dir d-mode-hook 'deer)
+
+  ;;mu4e Mail config
+  (setq mu4e-maildir "~/Mail"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder "/Archive"
+        mu4e-drafts-folder "/Drafts"
+        mu4e-sent-folder "/Sent"
+        mu4e-update-interval nil
+        mu4e-compose-signature-auto-include nil
+        mu4e-view-show-images t
+        mu4e-view-show-addresses t
+        )
+  ;; Mail directory shortcut
+  ;; (setq mu4e-maildir-shortcuts
+  ;;     '(()
+  ;;     ))
+
+
   )
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -488,9 +530,39 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(evil-want-Y-yank-to-eol nil)
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(hl-bg-colors
+   (quote
+    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+ '(hl-fg-colors
+   (quote
+    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
+ '(nrepl-message-colors
+   (quote
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (yapfify pyvenv pytest pyenv-mode py-isort pippel pipenv pip-requirements org-category-capture alert log4e gntp live-py-mode importmagic epc ctable concurrent helm-pydoc gitignore-mode fringe-helper git-gutter+ git-gutter flyspell-correct pos-tip flycheck magit magit-popup git-commit ghub with-editor cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk auctex flycheck-ycmd company-ycmd ycmd request-deferred deferred web-mode tide tagedit slim-mode scss-mode sass-mode pug-mode mvn meghanada maven-test-mode json-navigator hierarchy json-mode json-snatcher json-reformat helm-css-scss haml-mode groovy-mode groovy-imports pcache gradle-mode ensime sbt-mode scala-mode emmet-mode company-web web-completion-data company-tern dash-functional company-emacs-eclim eclim web-beautify tern prettier-js lsp-javascript-typescript typescript-mode lsp-mode livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc impatient-mode simple-httpd helm-gtags ggtags counsel-gtags add-node-modules-path vue-mode edit-indirect ssass-mode vue-html-mode markdown-toc markdown-mode yasnippet-snippets xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish diff-hl define-word counsel-projectile company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (ranger monokai-theme omnisharp shut-up csharp-mode solarized-theme wakatime-mode mu4e-maildirs-extension mu4e-alert helm-mu slack circe oauth2 websocket emojify ht emoji-cheat-sheet-plus company-emoji magic-latex-buffer lsp-ui lsp-python lsp-java company-lsp yapfify pyvenv pytest pyenv-mode py-isort pippel pipenv pip-requirements org-category-capture alert log4e gntp live-py-mode importmagic epc ctable concurrent helm-pydoc gitignore-mode fringe-helper git-gutter+ git-gutter flyspell-correct pos-tip flycheck magit magit-popup git-commit ghub with-editor cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk auctex flycheck-ycmd company-ycmd ycmd request-deferred deferred web-mode tide tagedit slim-mode scss-mode sass-mode pug-mode mvn meghanada maven-test-mode json-navigator hierarchy json-mode json-snatcher json-reformat helm-css-scss haml-mode groovy-mode groovy-imports pcache gradle-mode ensime sbt-mode scala-mode emmet-mode company-web web-completion-data company-tern dash-functional company-emacs-eclim eclim web-beautify tern prettier-js lsp-javascript-typescript typescript-mode lsp-mode livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc impatient-mode simple-httpd helm-gtags ggtags counsel-gtags add-node-modules-path vue-mode edit-indirect ssass-mode vue-html-mode markdown-toc markdown-mode yasnippet-snippets xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish diff-hl define-word counsel-projectile company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
+ '(vc-annotate-background-mode nil)
+ '(wakatime-python-bin nil)
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
