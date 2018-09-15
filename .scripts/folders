@@ -2,7 +2,7 @@
 h	~/
 d	~/Documents
 D	~/Downloads
-m	~/Music
+ms	~/Music
 pp	~/Pictures
 vv	~/Videos
 s	~/.scripts
@@ -15,3 +15,4 @@ ft	~/Fontys
 oi	~/Fontys/OpenIno
 fn	~/Fontys/FUN
 se	~/Fontys/SEP
+mnt	~/mnt
