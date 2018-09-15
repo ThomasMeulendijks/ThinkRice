@@ -1,4 +1,0 @@
-#!/bin/bash
-date=`date '+%y-%m-%d'`
-output="/data/backup/sensitive/$date.tar.gz"
-tar -cvzf $output /data/sensitive
