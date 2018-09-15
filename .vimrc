@@ -16,7 +16,9 @@ let mapleader =" "
 	set encoding=utf-8
 	set number
 	set relativenumber
-
+" new basics
+	set colorcolumn=80
+	set laststatus=2
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow
 	set splitright
