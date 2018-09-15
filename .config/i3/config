@@ -57,6 +57,8 @@ exec --no-startup-id mpd
 # touchpad off
 exec --no-startup-id synclient TouchpadOff=1
 
+# key delay
+exec_always --no-startup-id xset r rate 200 40
 
 # Set Xresources colors:
 set_from_resource $darkblack	color0  #000000
