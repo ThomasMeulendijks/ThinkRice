@@ -24,7 +24,7 @@ This function should only modify configuration layer settings."
 
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
-   dotspacemacs-ask-for-lazy-installation t
+   dotspacemacs-ask-for-lazy-installation nil
 
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
@@ -40,7 +40,15 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence '"jk"
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t)
      ;;     better-defaults
      emacs-lisp
      git
@@ -49,6 +57,7 @@ This function should only modify configuration layer settings."
      neotree
      csharp
      org
+     ess
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -84,7 +93,8 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(vue-mode)
+   dotspacemacs-additional-packages '(vue-mode
+                                      poly-markdown)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -465,7 +475,8 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq-default evil-escape-key-sequence "jf")
+  (setq-default evil-escape-key-sequence "jf"
+                evil-escape-delay 0.1)
   )
 
 (defun dotspacemacs/user-load ()
@@ -496,7 +507,6 @@ before packages are loaded."
 
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-  (add-hook 'dir d-mode-hook 'deer)
 
   ;;mu4e Mail config
   (setq mu4e-maildir "~/Mail"
@@ -513,7 +523,6 @@ before packages are loaded."
   ;; (setq mu4e-maildir-shortcuts
   ;;     '(()
   ;;     ))
-
 
   )
 
@@ -553,7 +562,7 @@ This function is called at the very end of Spacemacs initialization."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (ranger monokai-theme omnisharp shut-up csharp-mode solarized-theme wakatime-mode mu4e-maildirs-extension mu4e-alert helm-mu slack circe oauth2 websocket emojify ht emoji-cheat-sheet-plus company-emoji magic-latex-buffer lsp-ui lsp-python lsp-java company-lsp yapfify pyvenv pytest pyenv-mode py-isort pippel pipenv pip-requirements org-category-capture alert log4e gntp live-py-mode importmagic epc ctable concurrent helm-pydoc gitignore-mode fringe-helper git-gutter+ git-gutter flyspell-correct pos-tip flycheck magit magit-popup git-commit ghub with-editor cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk auctex flycheck-ycmd company-ycmd ycmd request-deferred deferred web-mode tide tagedit slim-mode scss-mode sass-mode pug-mode mvn meghanada maven-test-mode json-navigator hierarchy json-mode json-snatcher json-reformat helm-css-scss haml-mode groovy-mode groovy-imports pcache gradle-mode ensime sbt-mode scala-mode emmet-mode company-web web-completion-data company-tern dash-functional company-emacs-eclim eclim web-beautify tern prettier-js lsp-javascript-typescript typescript-mode lsp-mode livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc impatient-mode simple-httpd helm-gtags ggtags counsel-gtags add-node-modules-path vue-mode edit-indirect ssass-mode vue-html-mode markdown-toc markdown-mode yasnippet-snippets xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish diff-hl define-word counsel-projectile company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (poly-markdown polymode company-quickhelp ess-R-data-view ess ranger monokai-theme omnisharp shut-up csharp-mode solarized-theme wakatime-mode mu4e-maildirs-extension mu4e-alert helm-mu slack circe oauth2 websocket emojify ht emoji-cheat-sheet-plus company-emoji magic-latex-buffer lsp-ui lsp-python lsp-java company-lsp yapfify pyvenv pytest pyenv-mode py-isort pippel pipenv pip-requirements org-category-capture alert log4e gntp live-py-mode importmagic epc ctable concurrent helm-pydoc gitignore-mode fringe-helper git-gutter+ git-gutter flyspell-correct pos-tip flycheck magit magit-popup git-commit ghub with-editor cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk auctex flycheck-ycmd company-ycmd ycmd request-deferred deferred web-mode tide tagedit slim-mode scss-mode sass-mode pug-mode mvn meghanada maven-test-mode json-navigator hierarchy json-mode json-snatcher json-reformat helm-css-scss haml-mode groovy-mode groovy-imports pcache gradle-mode ensime sbt-mode scala-mode emmet-mode company-web web-completion-data company-tern dash-functional company-emacs-eclim eclim web-beautify tern prettier-js lsp-javascript-typescript typescript-mode lsp-mode livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc impatient-mode simple-httpd helm-gtags ggtags counsel-gtags add-node-modules-path vue-mode edit-indirect ssass-mode vue-html-mode markdown-toc markdown-mode yasnippet-snippets xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish diff-hl define-word counsel-projectile company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
