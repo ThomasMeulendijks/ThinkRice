@@ -12,7 +12,8 @@ c	~/Code
 wp	~/Wallpapers
 rp	~/Repos
 ft	~/Fontys
-oi	~/Fontys/OpenIno
-fn	~/Fontys/FUN
-se	~/Fontys/SEP
+fo	~/Fontys/oi-delta
+fd	~/Fontys/oi-delta
+ff	~/Fontys/FUN
+fs	~/Fontys/SEP
 mnt	~/mnt
