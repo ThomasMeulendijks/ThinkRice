@@ -15,11 +15,11 @@ echo 📶 $QUALITY%
 
 # color
 if [[ $QUALITY -ge 80 ]]; then
-    echo "#00FF00"
+	echo "#00FF00"
 elif [[ $QUALITY -lt 80 ]]; then
-    echo "#FFF600"
+	echo "#FFF600"
 elif [[ $QUALITY -lt 60 ]]; then
-    echo "#FFAE00"
+	echo "#FFAE00"
 elif [[ $QUALITY -lt 40 ]]; then
-    echo "#FF0000"
+	echo "#FF0000"
 fi
