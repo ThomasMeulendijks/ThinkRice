@@ -39,6 +39,7 @@ Plug 'Yggdroot/indentLine' " Shows ¦ on space indent
 Plug 'vim-scripts/CSApprox' " enables Gvim colorscemes in terminal
 Plug 'tomasr/molokai' " color
 Plug 'shougo/vimproc.vim' " TODO
+Plug 'ryanoasis/vim-devicons' " TODO
 
 "*****************************************************************************
 "" Custom bundles
@@ -57,7 +58,6 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 set bomb
 set binary
-
 
 "" Tab settings
 set tabstop=4
@@ -86,9 +86,8 @@ let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
 
-
 "" keep N lines of command line history
- set history=100
+set history=100
 
 " Enable persistent undo
 set undofile
@@ -106,7 +105,7 @@ set relativenumber
 
 let no_buffers_menu=1
 if !exists('g:not_finish_vimplug')
-  colorscheme molokai
+	colorscheme molokai
 endif
 
 "" Disable conceal (shows every character)
@@ -136,8 +135,14 @@ let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn="80,".join(range(120,999),",")
 
+"" popup color
+highlight Pmenu ctermbg=235
+
+"" LineNr
+highlight LineNr ctermbg=234
+
 if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
+	set statusline+=%{fugitive#statusline()}
 endif
 
 " vim-airline
@@ -145,8 +150,22 @@ let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
+let g:airline_powerline_fonts = 1
+let g:airline_skip_empty_sections = 0
+let g:airline#extensions#default#layout = [
+	\ [ 'a', 'b'],
+	\ [  'error', 'warning', 'x']
+\ ]
 
+"let g:airline#extensions#default#section_truncate_width = {}
+" let g:airline#extensions#default#section_truncate_width = {
+" 	\ 'b': 7,
+" 	\ 'x': 6,
+" 	\ 'y': 8,
+" 	\ 'z': 4,
+" 	\ 'warning': 80,
+" 	\ 'error': 80,
+" \ }
 
 "*****************************************************************************
 "" Abbreviations
@@ -163,34 +182,52 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-
 "*****************************************************************************
 "" Functions
 "*****************************************************************************
 
 "" TODO Figure out why wrap and wm
 if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
+	function s:setupWrapping()
+		set wrap
+		set wm=2
+		set textwidth=79
+	endfunction
 endif
 
 "" <CR>: close popup and save indent.
 function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
+	return deoplete#close_popup() . "\<CR>"
 endfunction
 
+" function! AirlineInit()
+" let g:airline_section_a =
+" 			\ airline#section#create(['mode'])
+" let g:airline_section_b =
+" 			\ airline#section#create(['file', ' ', 'readonly'])
+" let g:airline_section_c =
+" 			\ airline#section#create(['%{g:unite_outline_closest_tag}'])
+" let g:airline_section_x =
+" 			\ airline#section#create([])
+" let g:airline_section_y =
+" 			\ airline#section#create(['%<', 'branch'])
+" let g:airline_section_z =
+" 			\ airline#section#create(['%p%% ', '%{g:airline_symbols.linenr}%#__accent_bold#%l%#__restore__#:%v'])
+" endfunction
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
 
 "" Automatically deletes all tralling whitespace on save.
-autocmd BufWritePre * %s/\s\+$//e
+augroup vimrc-whitespace
+	autocmd!
+	autocmd BufWritePre * %s/\s\+$//e
+	autocmd BufWritePre * %s/\n\{3,}/\r\r/e
+augroup END
 
 "" Make calcurse notes markdown compatible:
-autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set
+			\ filetype=markdown
 
 "" Readme autowrap text:
 autocmd BufRead,BufNewFile *.md,*.tex,*.rmd,*.markdown set tw=79
@@ -199,10 +236,17 @@ autocmd BufRead,BufNewFile *.md,*.tex,*.rmd,*.markdown set tw=79
 autocmd FileType markdown let g:deoplete#enable_at_startup=0
 
 augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt,*.md,*.rmd,*.tex call s:setupWrapping()
+	autocmd!
+	autocmd BufRead,BufNewFile *.txt,*.md,*.rmd,*.tex call s:setupWrapping()
 augroup END
 
+"" Remember cursor position
+augroup vimrc-remember-cursor-position
+	autocmd!
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+"autocmd User AirlineAfterInit call AirlineInit()
 
 set autoread
 "*****************************************************************************
@@ -265,13 +309,13 @@ nnoremap <silent> <S-t> :tabnew<CR>
 vnoremap <C-c> "*Y :let @+=@*<CR>
 map <C-p> "+P
 
-nnoremap <silent> <F1> :NERDTreeFind<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
-nmap <silent> <F4> :TagbarToggle<CR>
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-map <F6> :setlocal spell! spelllang=en_us<CR>
-
+nnoremap <silent>	<F1> :NERDTreeFind<CR>
+nnoremap <silent>	<F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent>	<F3> :NERDTreeToggle<CR>
+nnoremap <silent>	<F4> :TagbarToggle<CR>
+nnoremap 			<F5> :call LanguageClient_contextMenu()<CR>
+map 				<F6> :setlocal spell! spelllang=en_us<CR>
+nnoremap <silent>	<F12> :LanguageClientStart<CR>
 "" Show on hover info
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 "" Go to definition
@@ -288,15 +332,15 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 
 "" SuperTab like snippets behavior.
 imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	\ pumvisible() ? "\<C-n>" :
+	\ neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
- \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 "*****************************************************************************
-"" configs
+"" Plugin configs
 "*****************************************************************************
 
 "" NERDTree configuration
@@ -321,6 +365,14 @@ let g:tagbar_autofocus = 1
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('smart_case', v:true)
 
+if !has("gui_running")
+	let g:CSApprox_loaded = 1
+	" IndentLine
+	let g:indentLine_enabled = 1
+	let g:indentLine_char = '┆'
+	let g:indentLine_faster = 1
+endif
+
 " LanguageClient
 
 " Required for operations modifying multiple buffers like rename.
@@ -328,18 +380,26 @@ call deoplete#custom#option('smart_case', v:true)
 set hidden
 
 let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
-    \ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['/usr/bin/pyls'],
-    \ }
+	\ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
+	\ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
+	\ 'java': ['/usr/bin/jdtls'],
+	\ 'python': ['/usr/bin/pyls'],
+\ }
+let g:LanguageClient_autoStart = 0
+let g:LanguageClient_autoStop = 1
 
 "" neomake
-call neomake#configure#automake('rnw', 500)
+call neomake#configure#automake('rnw', 0)
 "let g:neomake_open_list = 2
 
 "" Vim rooter
-let g:rooter_change_directory_for_non_project_files = 'home'
+let g:rooter_patterns = ['.git', '.git/', '_darcs/', '.hg', 'bzr/', '.svn/',
+			\ 'pom.xml']
+let g:rooter_change_directory_for_non_project_files = 'current'
+
+"*****************************************************************************
+"" custom configs
+"*****************************************************************************
 
 " html
 " for html files, 2 spaces
@@ -370,36 +430,32 @@ let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd':
 
 " vim-airline
 if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
-
-if !exists('g:airline_powerline_fonts')
-	let g:airline#extensions#tabline#left_sep = ' '
-	let g:airline#extensions#tabline#left_alt_sep = '|'
-	let g:airline_left_sep          = '▶'
-	let g:airline_left_alt_sep      = '»'
-	let g:airline_right_sep         = '◀'
-	let g:airline_right_alt_sep     = '«'
-	let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-	let g:airline#extensions#readonly#symbol   = '⊘'
-	let g:airline#extensions#linecolumn#prefix = '¶'
-	let g:airline#extensions#paste#symbol      = 'ρ'
-	let g:airline_symbols.linenr    = '␊'
-	let g:airline_symbols.branch    = '⎇'
-	let g:airline_symbols.paste     = 'ρ'
-	let g:airline_symbols.paste     = 'Þ'
-	let g:airline_symbols.paste     = '∥'
-	let g:airline_symbols.whitespace = 'Ξ'
-else
-	let g:airline#extensions#tabline#left_sep = ''
-	let g:airline#extensions#tabline#left_alt_sep = ''
-
-	" powerline symbols
-	let g:airline_left_sep = ''
-	let g:airline_left_alt_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_right_alt_sep = ''
-	let g:airline_symbols.branch = ''
-	let g:airline_symbols.readonly = ''
-	let g:airline_symbols.linenr = ''
-endif
+" Unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇ '
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
