@@ -95,6 +95,15 @@ set undodir=~/.config/nvim/undos
 set undolevels=100
 set undoreload=1000
 
+"Set wildignore
+if exists("g:vim_wildignore")
+	finish
+endif
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,solr/**,log/**,*.psd,*.PSD,.git/**,.gitkeep,.gems/**
+set wildignore+=*.ico,*.ICO,backup/**,*.sql,*.dump,*.tmp,*.min.js,Gemfile.lock,*.sqlite,*db,*.pyc
+set wildignore+=*.png,*.PNG,*.JPG,*.jpg,*.JPEG,*.jpeg,*.GIF,*.gif,*.pdf,*.PDF
+set wildignore+=vendor/**,coverage/**,tmp/**,rdoc/**,*.BACKUP.*,*.BASE.*,*.LOCAL.*,*.REMOTE.*,.sass-cache/**
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -272,19 +281,14 @@ noremap <Leader>gr :Gremove<CR>
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 
-"" Open corresponding.pdf
 map <leader>p :!opout <c-r>%<CR><CR>
 
-"" Compile document TODO depricated
+"" TODO depricated
 map <leader>c :!compiler <c-r>%<CR>
-
-"" Execute document
 map <leader>e :!executor <c-r>%<CR>
 
-"" Open terminal
 nnoremap <silent> <leader>sh :terminal<CR>
-
-" Use urlview to choose and open a url:
+" Use urlview to choose and open a url: TODO
 noremap <leader>u :w<Home>silent <End> !urlview<CR>
 
 "" Replace all is aliased to S.
@@ -294,16 +298,16 @@ nnoremap S :%s//g<Left><Left>
 inoremap jf <Esc>
 inoremap fj <Esc>
 
-"" Vmap for maintain Visual Mode after shifting > and <
-vmap < <gv
-vmap > >gv
-
 "" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+vnoremap L >gv
+vnoremap H <gv
 
 "" Tabs
 nnoremap <silent> <S-t> :tabnew<CR>
+
+nnoremap <S-b> :Denite buffer<CR>
 
 "" Copy selected text to system clipboard (requires gvim installed):
 vnoremap <C-c> "*Y :let @+=@*<CR>
@@ -349,7 +353,6 @@ let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycach
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=0
 let g:NERDTreeWinSize = 49
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 "" Disable polugot for the following languages
 let g:polyglot_disabled = ['latex']
@@ -374,11 +377,6 @@ if !has("gui_running")
 endif
 
 " LanguageClient
-
-" Required for operations modifying multiple buffers like rename.
-" Enabels hidden buffers
-set hidden
-
 let g:LanguageClient_serverCommands = {
 	\ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
 	\ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
