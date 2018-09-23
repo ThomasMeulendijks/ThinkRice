@@ -54,6 +54,6 @@ command=echo $(date '+%A %d %B %Y %H:%M')
 interval=30
 
 [wifi]
-#command=i3wifi
+command=i3wifi
 instance=wlp4s0
 interval=10
