@@ -1,46 +1,73 @@
 "*****************************************************************************
 "" Vim-PLug core
 ""*****************************************************************************
-if has('vim_starting')
-	set nocompatible               " Be iMproved
-endif
-
 " Required:
 call plug#begin('~/.config/nvim/plugged')
 
 "*****************************************************************************
 "" Plug install packages
+" TODO tabular
 " *****************************************************************************
-Plug 'scrooloose/nerdtree'
+"
+""" Syntax
+"
+Plug 'HerringtonDarkholme/yats.vim' " TypeScript synatx highlight
+"Plug 'sheerun/vim-polyglot' " General Syntax and indenting
+"Plug 'lervag/vimtex' " LaTeX suport
+"
+"""  compleation
+"
+Plug 'shougo/deoplete.nvim', {
+			\ 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/neosnippet.vim'
+Plug 'shougo/context_filetype.vim'
+"Plug 'shougo/neopairs.vim' " Auto colse pairentisis (TODO does not work)
+"
+"" Auto compleation sources
+"
+Plug 'honza/vim-snippets'
+Plug 'shougo/neosnippet-snippets'
+Plug 'shougo/neco-vim' " VimL source for deoplete
+Plug 'shougo/neco-syntax'
+Plug 'shougo/neoinclude.vim'
 Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
+"
+""" Navigation
+"
+Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-rooter' " auto changes working dir to project root
-Plug 'sheerun/vim-polyglot' " General Syntax and indenting
-Plug 'HerringtonDarkholme/yats.vim' " TypeScript synatx highlight
-Plug 'lervag/vimtex' " LaTeX suport
+Plug 'majutsushi/tagbar' " TODO figure out
+"
+"Helpers
+"
 Plug 'neomake/neomake' " Enables linting and compinging / error checking
-Plug 'shougo/deoplete.nvim', {
-			\ 'do': ':UpdateRemotePlugins' } "Popup compleation
-Plug 'shougo/neosnippet.vim' " Snipit plugin
-Plug 'shougo/neosnippet-snippets' " actual snipits
-Plug 'shougo/neco-vim' " VimL compleation via deoplete
-Plug 'shougo/neco-syntax' " genereal compleation via deoplete
-Plug 'shougo/denite.nvim' " generic fuzzy finder (helm like) TODO config
-Plug 'tpope/vim-commentary' " easy commenting
-Plug 'tpope/vim-fugitive' " Git stuff TODO
-Plug 'airblade/vim-gitgutter' " Git stuff TODO
+Plug 'godlygeek/tabular'
+"Plug 'shougo/echodoc.vim' " echos the documentation of a function when on it (TODO CHECK)
+"
+" Visual
+"
+Plug 'Yggdroot/indentLine' " Shows ¦ on space indent
 Plug 'vim-airline/vim-airline' " status bar Emacs like
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Raimondi/delimitMate' " Auto colose qutoes and brackets ect
-Plug 'majutsushi/tagbar' " TODO figure out
-Plug 'Yggdroot/indentLine' " Shows ¦ on space indent
 Plug 'vim-scripts/CSApprox' " enables Gvim colorscemes in terminal
 Plug 'tomasr/molokai' " color
-Plug 'shougo/vimproc.vim' " TODO
-Plug 'ryanoasis/vim-devicons' " TODO
-
+Plug 'ryanoasis/vim-devicons'
+"
+" Other
+"
+Plug 'tpope/vim-commentary' " easy commenting
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
+Plug 'edkolev/tmuxline.vim'
+"Plug 'shougo/denite.nvim' " generic fuzzy finder (helm like) TODO config
+"Plug 'shougo/vimproc.vim' " TODO
+"Plug 'konfekt/fastfold' " speed up vim by updating only when called for
+"Plug 'tpope/vim-fugitive' " Git stuff TODO
+"Plug 'airblade/vim-gitgutter' " Git stuff TODO
+"Plug 'Raimondi/delimitMate' " Auto colose qutoes and brackets ect
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
@@ -81,10 +108,10 @@ set nobackup
 set noswapfile
 
 "" session management TODO
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
+"let g:session_directory = "~/.config/nvim/session"
+"let g:session_autoload = "no"
+"let g:session_autosave = "no"
+"let g:session_command_aliases = 1
 
 "" keep N lines of command line history
 set history=100
@@ -96,14 +123,11 @@ set undolevels=100
 set undoreload=1000
 
 "Set wildignore
-if exists("g:vim_wildignore")
-	finish
-endif
-
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,solr/**,log/**,*.psd,*.PSD,.git/**,.gitkeep,.gems/**
 set wildignore+=*.ico,*.ICO,backup/**,*.sql,*.dump,*.tmp,*.min.js,Gemfile.lock,*.sqlite,*db,*.pyc
 set wildignore+=*.png,*.PNG,*.JPG,*.jpg,*.JPEG,*.jpeg,*.GIF,*.gif,*.pdf,*.PDF
 set wildignore+=vendor/**,coverage/**,tmp/**,rdoc/**,*.BACKUP.*,*.BASE.*,*.LOCAL.*,*.REMOTE.*,.sass-cache/**
+
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -112,20 +136,26 @@ set ruler
 set number
 set relativenumber
 
+"" Disable --INSTERT-- ect.
+set noshowmode
+
 let no_buffers_menu=1
 if !exists('g:not_finish_vimplug')
 	colorscheme molokai
 endif
 
-"" Disable conceal (shows every character)
-set conceallevel=0
-
+"" Conseal characters unless cursor is on the line
+set conceallevel=2
+set concealcursor ="niv"
+let g:indentLine_concealcursor = 'niv'
+let g:indentLine_conceallevel = 2
 "" Status bar
 set laststatus=2
 
+set cmdheight=2
+
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-" Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -144,10 +174,7 @@ let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn="80,".join(range(120,999),",")
 
-"" popup color
 highlight Pmenu ctermbg=235
-
-"" LineNr
 highlight LineNr ctermbg=234
 
 if exists("*fugitive#statusline")
@@ -158,24 +185,18 @@ endif
 let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extentions#show_splits = 0
+
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 0
 let g:airline#extensions#default#layout = [
-	\ [ 'a', 'b'],
-	\ [  'error', 'warning', 'x']
-\ ]
+			\ [ 'a', 'b'],
+			\ [  'error', 'warning', 'x']
+			\ ]
 
-"let g:airline#extensions#default#section_truncate_width = {}
-" let g:airline#extensions#default#section_truncate_width = {
-" 	\ 'b': 7,
-" 	\ 'x': 6,
-" 	\ 'y': 8,
-" 	\ 'z': 4,
-" 	\ 'warning': 80,
-" 	\ 'error': 80,
-" \ }
-
+"" c = Dont gice ins completion menu messages
+set shortmess+=c
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -194,39 +215,9 @@ cnoreabbrev Qall qall
 "*****************************************************************************
 "" Functions
 "*****************************************************************************
-
-"" TODO Figure out why wrap and wm
-if !exists('*s:setupWrapping')
-	function s:setupWrapping()
-		set wrap
-		set wm=2
-		set textwidth=79
-	endfunction
-endif
-
-"" <CR>: close popup and save indent.
-function! s:my_cr_function() abort
-	return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" function! AirlineInit()
-" let g:airline_section_a =
-" 			\ airline#section#create(['mode'])
-" let g:airline_section_b =
-" 			\ airline#section#create(['file', ' ', 'readonly'])
-" let g:airline_section_c =
-" 			\ airline#section#create(['%{g:unite_outline_closest_tag}'])
-" let g:airline_section_x =
-" 			\ airline#section#create([])
-" let g:airline_section_y =
-" 			\ airline#section#create(['%<', 'branch'])
-" let g:airline_section_z =
-" 			\ airline#section#create(['%p%% ', '%{g:airline_symbols.linenr}%#__accent_bold#%l%#__restore__#:%v'])
-" endfunction
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-
 "" Automatically deletes all tralling whitespace on save.
 augroup vimrc-whitespace
 	autocmd!
@@ -238,16 +229,7 @@ augroup END
 autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set
 			\ filetype=markdown
 
-"" Readme autowrap text:
-autocmd BufRead,BufNewFile *.md,*.tex,*.rmd,*.markdown set tw=79
-
-"" Disable deolete in markdown files
-autocmd FileType markdown let g:deoplete#enable_at_startup=0
-
-augroup vimrc-wrapping
-	autocmd!
-	autocmd BufRead,BufNewFile *.txt,*.md,*.rmd,*.tex call s:setupWrapping()
-augroup END
+autocmd CompleteDone * silent! pclose!
 
 "" Remember cursor position
 augroup vimrc-remember-cursor-position
@@ -255,41 +237,40 @@ augroup vimrc-remember-cursor-position
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"autocmd User AirlineAfterInit call AirlineInit()
-
 set autoread
+autocmd CursorHold,FocusGained * checktime
+
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+"" _ clipboard x
+nnoremap x "_x
 
-"" Navigating with guides
-inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
-vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
-map <Space><Tab> <Esc>/<++><Enter>"_c4l
+"" Disable
+nnoremap Q q
+nnoremap M m
+nnoremap ZZ <Nop>
 
 "" Git
+noremap <Leader>gsh :Gpush<CR>
 noremap <Leader>ga :Gwrite<CR>
 noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
 noremap <Leader>gll :Gpull<CR>
 noremap <Leader>gs :Gstatus<CR>
 noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
 
-"" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+nnoremap <leader>p :!opout <c-r>%<CR><CR>
 
-map <leader>p :!opout <c-r>%<CR><CR>
-
-"" TODO depricated
+"" TODO depricated replace with neomake ect.
 map <leader>c :!compiler <c-r>%<CR>
 map <leader>e :!executor <c-r>%<CR>
 
 nnoremap <silent> <leader>sh :terminal<CR>
 " Use urlview to choose and open a url: TODO
-noremap <leader>u :w<Home>silent <End> !urlview<CR>
+" https://google.com
+" noremap <leader>u :w<Home>silent <End> !urlview<CR>
 
 "" Replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
@@ -303,7 +284,6 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap L >gv
 vnoremap H <gv
-
 "" Tabs
 nnoremap <silent> <S-t> :tabnew<CR>
 
@@ -317,31 +297,42 @@ nnoremap <silent>	<F1> :NERDTreeFind<CR>
 nnoremap <silent>	<F2> :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent>	<F3> :NERDTreeToggle<CR>
 nnoremap <silent>	<F4> :TagbarToggle<CR>
-nnoremap 			<F5> :call LanguageClient_contextMenu()<CR>
-map 				<F6> :setlocal spell! spelllang=en_us<CR>
+nnoremap <silent>	<F5> :call LanguageClient_contextMenu()<CR>
+map 	 <silent>	<F6> :setlocal spell! spelllang=en_us<CR>
 nnoremap <silent>	<F12> :LanguageClientStart<CR>
 "" Show on hover info
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 "" Go to definition
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
-"" expand neosnippet or goto next placeholder
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Shortcutting split navigation, saving a keypress:
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
-"" map <CR> to my_cr_function
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" Expand the completed snippet trigger by <CR>.
+imap <expr><CR>
+			\ (pumvisible() && neosnippet#expandable()) ?
+			\ "\<Plug>(neosnippet_expand)" : "\<CR>"
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <expr> '  pumvisible() ? deoplete#close_popup() : "'"
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
 "" SuperTab like snippets behavior.
 imap <expr><TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+			\ pumvisible() ? "\<C-n>" :
+			\ neosnippet#expandable_or_jumpable() ?
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 "*****************************************************************************
 "" Plugin configs
@@ -367,6 +358,13 @@ let g:tagbar_autofocus = 1
 "" Deoplete
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('smart_case', v:true)
+call deoplete#custom#source('buffer', 'rank', 0)
+call deoplete#custom#option('ignore_sources', {'_': ['buffer']})
+call deoplete#custom#source('neosnippet', 'rank', 9999)
+"set completeopt+=noinsert
+
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 
 if !has("gui_running")
 	let g:CSApprox_loaded = 1
@@ -378,11 +376,11 @@ endif
 
 " LanguageClient
 let g:LanguageClient_serverCommands = {
-	\ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
-	\ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
-	\ 'java': ['/usr/bin/jdtls'],
-	\ 'python': ['/usr/bin/pyls'],
-\ }
+			\ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
+			\ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
+			\ 'java': ['/usr/bin/jdtls'],
+			\ 'python': ['/usr/bin/pyls'],
+			\ }
 let g:LanguageClient_autoStart = 0
 let g:LanguageClient_autoStop = 1
 
@@ -390,13 +388,15 @@ let g:LanguageClient_autoStop = 1
 call neomake#configure#automake('rnw', 0)
 "let g:neomake_open_list = 2
 
+let g:echodoc#enable_at_startup = 1
+
 "" Vim rooter
 let g:rooter_patterns = ['.git', '.git/', '_darcs/', '.hg', 'bzr/', '.svn/',
 			\ 'pom.xml']
 let g:rooter_change_directory_for_non_project_files = 'current'
 
 "*****************************************************************************
-"" custom configs
+"" Filtype configs
 "*****************************************************************************
 
 " html
@@ -413,14 +413,20 @@ augroup END
 augroup vimrc-python
 	autocmd!
 	autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-		\ formatoptions+=croq softtabstop=4
-		\ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+				\ formatoptions+=croq softtabstop=4
+				\ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
+augroup vimrc-markdown
+	autocmd!
+	autocmd FileType markdown let g:indentLine_concealcursor = ''
+	autocmd FileType markdown let g:deoplete#enable_at_startup=0
+	autocmd FileType markdown exe deoplete#disable()
+	autocmd BufRead,BufNewFile *.md,*.tex,*.rmd,*.markdown set tw=78
+augroup END
 "*****************************************************************************
 "" Convenience variables
 "*****************************************************************************
-
 " Interpret .md files, etc. as .markdown
 let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd':
 			\ 'markdown','.md': 'markdown', '.markdown':
@@ -457,3 +463,32 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
+" Devicons
+let g:airline_symbols.branch = ''
+
+" let g:tmuxline_separators = {
+"     \ 'left' : '',
+"     \ 'left_alt': '',
+"     \ 'right' : '',
+"     \ 'right_alt' : '',
+"     \ 'space' : ' '}
+
+" let g:tmuxline_preset = {
+"       \'a'    : '#S',
+"       \'b'    : '#W',
+"       \'c'    : '#H',
+"       \'win'  : '#I #W',
+"       \'cwin' : '#I #W',
+"       \'x'    : '%a',
+"       \'y'    : '#W %R',
+"       \'z'    : '#H'}
+let g:tmuxline_powerline_separators = 1
+let g:tmuxline_preset = {
+			\'a'    : '#S',
+			\'c'    : ['#(whoami)',
+			\		'#(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD)'],
+			\'win'  : ['#I', '#W'],
+			\'cwin' : ['#I', '#W', '#F'],
+			\'x'    : '',
+			\'y'    : ['%R', '%a', '%Y'],
+			\'z'    : '#H'}

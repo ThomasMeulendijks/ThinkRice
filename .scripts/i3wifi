@@ -6,12 +6,12 @@ esac
 
 INTERFACE="${BLOCK_INSTANCE:-wlp4s0}"
 
-[[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]] && echo 📡 && exit
+[[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]] && echo 睊 && exit
 
 QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 
 echo  $QUALITY%
-echo 睊 $QUALITY%
+echo help $QUALITY%
 
 # color
 if [[ $QUALITY -ge 80 ]]; then

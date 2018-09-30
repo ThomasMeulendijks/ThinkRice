@@ -292,18 +292,18 @@ for_window [title="mpvfloat"] border pixel 0
 no_focus [title="mpvfloat"]
 
 # #---Function Buttons---# #
-bindsym $mod+F1		exec --no-startup-id zathura ~/.config/i3/i3_guide.pdf
-bindsym $mod+F2		restart
-bindsym $mod+F3		exec --no-startup-id displayselect
-bindsym $mod+F4		exec --no-startup-id $hibernate
-bindsym $mod+F5		exec --no-startup-id $netrefresh
-bindsym $mod+F6		exec --no-startup-id $term -e transmission-remote-cli
+#bindsym $mod+F1		exec --no-startup-id zathura ~/.config/i3/i3_guide.pdf
+bindsym $mod+F2		exec --no-startup-id displayselect
+bindsym $mod+F3		restart
+##bindsym $mod+F4		exec --no-startup-id $hibernate
+##bindsym $mod+F5	exec $term -e sudo -A wifi-menu
+##bindsym $mod+F6		exec --no-startup-id $term -e transmission-remote-cli
 ##bindsym $mod+F7
-bindsym $mod+F8		exec --no-startup-id ~/.config/mutt/etc/mailsync.sh
+##bindsym $mod+F8		exec --no-startup-id ~/.config/mutt/etc/mailsync.sh
 bindsym $mod+F9		exec --no-startup-id dmenumount
 bindsym $mod+F10	exec --no-startup-id dmenuumount
 bindsym $mod+F11	exec --no-startup-id networkmanager_dmenu
-bindsym $mod+F12	exec $term -e sudo -A wifi-menu
+bindsym $mod+F12	exec --no-startup-id $netrefresh
 
 # #---Arrow Keys---# #
 bindsym $mod+Left		focus left

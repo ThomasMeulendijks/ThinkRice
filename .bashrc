@@ -54,6 +54,7 @@ alias Txh="cp ~/Documents/LaTeX/handout.tex"
 alias TC='texclear'
 
 source ~/.shortcuts
-
+source /usr/share/bash-completion/completions/git
 shdl() { curl -O $(curl -s http://sci-hub.tw/"$@" | grep location.href | grep -o http.*pdf) ;}
 alias dotfiles='/usr/bin/git --git-dir=/home/thomas/Repos/dotfiles/ --work-tree=/home/thomas'
+alias dfr=dotfiles
