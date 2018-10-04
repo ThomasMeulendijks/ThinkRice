@@ -58,3 +58,6 @@ source /usr/share/bash-completion/completions/git
 shdl() { curl -O $(curl -s http://sci-hub.tw/"$@" | grep location.href | grep -o http.*pdf) ;}
 alias dotfiles='/usr/bin/git --git-dir=/home/thomas/Repos/dotfiles/ --work-tree=/home/thomas'
 alias dfr=dotfiles
+function cd {
+    builtin cd "$@" && ls -a
+    }
