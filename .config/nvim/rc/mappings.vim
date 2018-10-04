@@ -32,12 +32,15 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+nnoremap <leader><leader> :Denite buffer file/rec<CR>
 " Leader a-------------------------
 " Leader b-------------------------
 "" Substitude buffer
 nnoremap <leader>bs :%s//g<Left><Left>
 nnoremap <leader>bb :Denite buffer<CR>
-nnoremap <leader>bo :only<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bf :Neoformat<CR>
+
 " Leader c-------------------------
 "TODO DEPRICATED
 map <leader>c :!compiler <c-r>%<CR>
@@ -57,18 +60,27 @@ map <leader>e :!executor <c-r>%<CR>
 " Leader m-------------------------
 " Leader n-------------------------
 " Leader o-------------------------
+nnoremap <silent><leader>oe :Defx -toggle -split=vertical -buffer-name=defx
+			\ -direction=topleft -winwidth=40<CR>
+
+nnoremap <silent><leader>ot :TagbarToggle<CR>
+
 " Leader p-------------------------
 nnoremap <leader>p :!opout <c-r>%<CR><CR>
 
 " Leader q-------------------------
 " Leader r-------------------------
+nnoremap <leader>rR :so %<CR>
 " Leader s-------------------------
 " Leader t-------------------------
 nnoremap <silent> <leader>tn :tabnew<CR>
 
 " Leader u-------------------------
-" Leader v-------------------------
+" Leader v -------------------------
 " Leader w-------------------------
+nmap <silent><leader>wo :only<CR>
+nmap <silent><leader>wv :vsplit<CR>
+nmap <silent><leader>wh :split<CR>
 " Leader x-------------------------
 " Leader y-------------------------
 " Leader z-------------------------

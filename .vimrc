@@ -209,7 +209,6 @@ let mapleader =" "
 	autocmd FileType php,html inoremap ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
 	autocmd FileType php,html inoremap &<space> &amp;<space>
 
-
 """.bib
 	autocmd FileType bib inoremap ,a @article{<Enter><tab>author<Space>=<Space>"<++>",<Enter><tab>year<Space>=<Space>"<++>",<Enter><tab>title<Space>=<Space>"<++>",<Enter><tab>journal<Space>=<Space>"<++>",<Enter><tab>volume<Space>=<Space>"<++>",<Enter><tab>pages<Space>=<Space>"<++>",<Enter><tab>}<Enter><++><Esc>8kA,<Esc>i
 	autocmd FileType bib inoremap ,b @book{<Enter><tab>author<Space>=<Space>"<++>",<Enter><tab>year<Space>=<Space>"<++>",<Enter><tab>title<Space>=<Space>"<++>",<Enter><tab>publisher<Space>=<Space>"<++>",<Enter><tab>}<Enter><++><Esc>6kA,<Esc>i
@@ -242,8 +241,6 @@ let mapleader =" "
 	autocmd FileType mp inoremap ,c Class.("<++>")(<++>)(<++>);<Enter><Tab><++><Esc>kf(i
 	autocmd FileType mp inoremap ,d drawObjects();<Enter><Tab><++><Esc>:g/Class.*(/normal f.lwi,<Enter>qaq:g/Class.*(/normal f.lvw"Ay<Enter>:g/Class.*,(/normal f,x<Enter>/drawObjects()<Enter>f("apx
 
-
-
 	autocmd FileType mp inoremap ,ttb topToBottom(45)(<++>);<Enter><Tab><++><Esc>kf(l
 	autocmd FileType mp inoremap ,ltr leftToRight(45)(<++>);<Enter><Tab><++><Esc>kf(l
 	autocmd FileType mp inoremap ,i item()("<++>")(<++>);<Enter><Tab><++><Esc>kf)i
@@ -256,7 +253,6 @@ let mapleader =" "
 	autocmd FileType mp inoremap ,lcomp clink(composition)();<Enter><Tab><++><Esc>kf)f)i
 	autocmd FileType mp inoremap ,ldep clink(dependency)();<Enter><Tab><++><Esc>kf)f)i
 "	autocmd FileType mp inoremap ,i item(iAssoc)("<++>")(obj.<++> = <++>);<Enter><Esc>/<++><Enter>"_c4l
-
 
 vmap <expr> ++ VMATH_YankAndAnalyse()
 nmap ++ vip++

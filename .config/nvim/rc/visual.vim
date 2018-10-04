@@ -8,6 +8,7 @@ set noshowmode
 
 "" no highlight on search
 set nohlsearch
+set incsearch
 
 "" scroll offset
 set scrolloff=5
@@ -26,12 +27,14 @@ let &colorcolumn="80,".join(range(120,999),",")
 highlight Pmenu ctermbg=235
 highlight LineNr ctermbg=234
 
+autocmd InsertEnter,InsertLeave * set cul!
+
 "" Theme settings
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
-colorscheme onedark
+"colorscheme onedark
+colorscheme molokai
 
-"" Conseal characters unless cursor is on the line
 set conceallevel=2
 set concealcursor ="niv"
 
