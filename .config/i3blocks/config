@@ -8,13 +8,13 @@ interval=once
 signal=9
 
 [mpd]
-label=🎼
+label=
 command=i3mpd
 interval=once
 signal=11
 
 [pacman]
-label=📦
+label=
 command=i3pacman
 interval=once
 signal=8

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$1" = "up" ]
+then
+openvpn --mktun --dev tun1
+openconnect vpnseclab.fhict.nl --authgroup=Vcenter_Pilot_users --interface=tun1
+fi
+
+if [ "$1" = "down" ]
+then
+openvpn --rmtun --dev tun1
+fi

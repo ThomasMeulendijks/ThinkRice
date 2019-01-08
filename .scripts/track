@@ -1,0 +1,5 @@
+#!/bin/sh
+Date=`date '+%y-%m-%d'`
+Time=`date '+%H-%M'`
+echo "$Time : $1 $2 $3" >> ~/Documents/timetrack/"$Date"
+

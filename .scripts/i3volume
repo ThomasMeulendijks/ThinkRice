@@ -8,5 +8,5 @@ case $BLOCK_BUTTON in
 esac
 
 printpastatus() { [[ $(pamixer --get-mute) = "true" ]] && echo -n 婢 && exit
-echo  $(pamixer --get-volume)% ;}
-printpastatus
+	echo  $(pamixer --get-volume)% ;}
+	printpastatus
