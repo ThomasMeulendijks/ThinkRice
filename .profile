@@ -7,12 +7,11 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="firefox"
 export READER="zathura"
-export BIB="$HOME/Documents/LaTeX/uni.bib"
+#export BIB="$HOME/Documents/LaTeX/uni.bib"
 
 . ~/.scripts/shortcuts.sh 2>/dev/null
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval "$(ssh-agent -s)"

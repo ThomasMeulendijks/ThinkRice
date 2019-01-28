@@ -3,4 +3,4 @@ if exists("b:did_html_ftplugin")
 	finish
 endif
 let b:did_html_ftplugian = 1
-autocmd TextChanged,TextChangedI <buffer> silent write
+autocmd TextChanged,TextChangedI <buffer> write

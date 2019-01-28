@@ -40,7 +40,7 @@ if dein#load_state('~/.cache/dein')
 	"" Basic "
 	""""""""""
 	call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
-	call dein#add('tpope/vim-sensible')
+"	call dein#add('tpope/vim-sensible')
 	""""""""""
 	"" UI    "
 	""""""""""
@@ -50,6 +50,8 @@ if dein#load_state('~/.cache/dein')
 	"" Utils "
 	""""""""""
 	call dein#add('Shougo/defx.nvim')
+	call dein#add('Shougo/denite.nvim')
+	call dein#add('tpope/vim-fugitive')
 	call dein#add('airblade/vim-rooter')
 	call dein#add('wesQ3/vim-windowswap')
 	call dein#add('Shougo/echodoc.vim')
@@ -67,6 +69,7 @@ if dein#load_state('~/.cache/dein')
 	call dein#add('carlitux/deoplete-ternjs', {'on_ft':'javascript',
 				\'build' : 'npm i -g tern'})
 	call dein#add('Shougo/neco-syntax')
+	call dein#add('Shougo/deoplete-clangx')
 	""""""""""""
 	"" Syntax "'
 	""""""""""""
@@ -114,4 +117,3 @@ call s:source_rc('plugins/deoplete.rc.vim')
 call s:source_rc('plugins/neomake.rc.vim')
 call s:source_rc('plugins/neoformat.rc.vim')
 call s:source_rc('plugins/neosnippet.rc.vim')
-

@@ -33,7 +33,8 @@ set $hibernate sudo -A systemctl suspend
 # #---Starting External Scripts---# #
 # Setting the background and colorscheme:
 #exec_always --no-startup-id wal -i ~/.config/wall.png
-exec_always --no-startup-id wal --theme gruvbox
+exec --no-startup-id wal --theme gruvbox
+exec --no-startup-id xrdb ~/.Xresources
 exec_always --no-startup-id feh --bg-scale ~/.config/wall.png
 #Starts dunst for notifications:
 exec --no-startup-id dunst
@@ -78,10 +79,10 @@ set_from_resource $white	color15 #000000
 set $transparent		#00000000
 
 #                       BORDER			BACKGROUND	TEXT		INDICATOR		CHILD_BORDER
-client.focused			$red			$red		$magenta	$darkmagenta	$darkblue
-client.unfocused		$transparent	$blue		$white		$darkblue		$darkblack
-client.focused_inactive	$transparent	$blue		$white		$darkblue		$darkblack
-client.urgent			$darkred		$darkred	$black		$darkred		$darkred
+client.focused			$transparent $red		$magenta	$yellow 		$black
+client.unfocused		$transparent	$blue		$white		$darkblack		$darkblack
+client.focused_inactive	$transparent	$blue		$white		$darkblack		$darkblack
+client.urgent			$darkred		$darkred	$black		$transparent	$darkred
 client.background $black
 
 bar {
@@ -149,7 +150,7 @@ bindsym $mod+o			sticky toggle
 bindsym $mod+Shift+o		exec --no-startup-id "bash ~/.scripts/i3resize right"
 
 bindsym $mod+p			exec --no-startup-id lmc toggle
-bindsym $mod+Shift+p		exec --no-startup-id lmc pause
+bindsym $mod+Shift+p	exec --no-startup-id passmenu
 
 bindsym $mod+a			[instance="math"] scratchpad show; [instance="math"] move position center
 bindsym $mod+Shift+a		exec $term -e pulsemixer
@@ -160,9 +161,8 @@ bindsym $mod+Shift+s		gaps inner current minus 5
 bindsym $mod+d			exec --no-startup-id dmenu_run
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 
-set $freeze Distraction-free mode (mod+shift+esc to exit)
-mode "$freeze" { bindsym $mod+Shift+Escape mode "default"
-}
+#set $freeze Distraction-free mode (mod+shift+esc to exit)
+#mode "$freeze" { bindsym $mod+Shift+Escape mode "default"}
 
 bindsym $mod+f			fullscreen toggle
 #bindsym $mod+Shift+f		mode "$freeze"
@@ -198,7 +198,7 @@ bindsym $mod+b			bar mode toggle
 bindsym $mod+Shift+b		floating toggle; sticky toggle; exec --no-startup-id bottomleft
 
 bindsym $mod+n			exec $term -e newspod
-##bindsym $mod+Shift+n
+# bindsym $mod+Shift+n
 
 bindsym $mod+m 			exec --no-startup-id st -e ncmpcpp
 bindsym $mod+Shift+m		exec --no-startup-id lmc mute

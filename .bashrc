@@ -53,6 +53,8 @@ alias Txs="cp ~/Documents/LaTeX/beamer.tex"
 alias Txh="cp ~/Documents/LaTeX/handout.tex"
 alias TC='texclear'
 
+alias clearclip="xclip -selection clipboard ~/Documents/blank"
+
 #########
 ## NPM ##
 #########
@@ -76,4 +78,3 @@ alias dfr=dotfiles
 function cd {
 	builtin cd "$@" && ls -a
 }
-source ~/.currentProject

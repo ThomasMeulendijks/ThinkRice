@@ -64,13 +64,14 @@ nnoremap <leader><leader> :Denite file/rec<CR>
 ""nnoremap <leader>bs :Denite buffer<CR>
 "buffer quit/close :bp | sp | bn | bd
 ""nnoremap <leader>bq :bdelete<CR>
+
+nnoremap <leader>bb :bp<CR>
+nnoremap <leader>bn :bnext<CR>
 nnoremap <leader>bs :%s//g<Left><Left>
 nnoremap <leader>bq :bp <BAR> bd #<CR>
 nnoremap <leader>bQ :%bdelete<CR>
 nnoremap <leader>bw :w<CR>
 nnoremap <leader>bo :BufOnly<CR>
-nnoremap <leader>bh :bprevious<CR>
-nnoremap <leader>bl :bnext<CR>
 nnoremap <leader>bf :Neoformat<CR>
 """""""""""""""""""""""
 ""Leader c------------"
@@ -125,10 +126,8 @@ nnoremap <leader>rR :so %<CR>
 """""""""""""""""""""""
 ""Leader s(pelling)---"
 """""""""""""""""""""""
-nmap <leader>sw ]s
+nmap <leader>sn ]s
 nmap <leader>sb [s
-nmap <leader>sj ]s
-nmap <leader>sk [s
 nmap <leader>sc z=
 """""""""""""""""""""""
 ""Leader t(oggle)-----"
@@ -139,7 +138,6 @@ nnoremap <silent> <Leader>ts :setlocal spell! spelllang=en_us<CR>
 nnoremap <silent><leader>te :Defx -toggle -split=vertical -buffer-name=defx
 			\ -direction=topleft -winwidth=30<CR>
 nnoremap <silent><leader>tb :TagbarToggle<CR>
-nnoremap <silent><leader>tt :7split<CR>:terminal<CR>
 """""""""""""""""""""""
 ""Leader u------------"
 """""""""""""""""""""""
@@ -149,10 +147,11 @@ nnoremap <silent><leader>tt :7split<CR>:terminal<CR>
 ""Leader w(indow)-----"
 """""""""""""""""""""""
 nmap <silent><leader>wo :only<CR>
-nmap <silent><leader>wv :vsplit<CR>
 nmap <silent><leader>ws :split<CR>
+nmap <silent><leader>wv :vsplit<CR>
 nmap <leader>wq :q<CR>
 nmap <leader>wQ :qa<CR>
+nnoremap <silent><leader>wt :7split<CR>:terminal<CR>:startinsert<CR>
 """window move
 nmap <leader>wmh <C-w>H
 nmap <leader>wmj <C-w>J

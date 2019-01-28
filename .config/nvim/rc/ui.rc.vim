@@ -32,6 +32,7 @@ let &colorcolumn="80,".join(range(120,999),",")
 "autocmd BufEnter * sign define dummy
 "autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
+" toggle line highlight
 autocmd InsertEnter,InsertLeave * set cul!
 
 "" Theme settings
