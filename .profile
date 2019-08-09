@@ -3,6 +3,7 @@
 # Profile file. Runs on login.
 
 export PATH="$PATH:$HOME/.scripts"
+export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
 export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="firefox"
@@ -15,10 +16,12 @@ export READER="zathura"
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval "$(ssh-agent -s)"
-  ssh-add
 fi
 
 # Start graphical server if i3 not already running.
 if [[ "$(tty)" = "/dev/tty1" ]]; then
-	pgrep -x i3 || exec startx
+	pgrep -x dwm || exec startx /usr/local/bin/dwm
+fi
+if [[ "$(tty)" = "/dev/tty2" ]]; then
+	pgrep -x i3 || exec startx 
 fi

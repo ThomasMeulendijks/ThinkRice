@@ -1,14 +1,16 @@
 #!/bin/sh
 
-choices="laptop\nlaptopdual\nHDMI\nManual selection"
+choices="laptop\nlaptopdual\nHDMI\ndock\ndockdual\nManual selection"
 
 chosen=$(echo -e "$choices" | dmenu -i)
 
 case "$chosen" in
 	laptopdual) xrandr --output eDP-1 --auto --output HDMI-2 --auto --left-of eDP-1 ;;
 	laptop) xrandr --output eDP-1 --auto --output HDMI-2 --off ;;
-	DP) xrandr --output DP-1 --auto --output eDP-1 --off ;;
-	HDMI) xrandr --output HDMI-2 --auto --output eDP-1 --off ;;
+	displayport) xrandr --output DP-1 --auto --output eDP-1 --off ;;
+	hdmi) xrandr --output HDMI-2 --auto --output eDP-1 --off ;;
+	dock) xrandr --output DP-2-2 --auto --output eDP-1 --off ;;
+	dockdual) xrandr ---output eDP-1 --auto -output DP-2-2 --auto --left-of eDP-1 ;;
 	"Manual selection") arandr ;;
 esac
 

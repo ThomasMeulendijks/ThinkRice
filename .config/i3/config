@@ -1,15 +1,4 @@
 # vim: filetype=i3config
-#  _        _    ____  ____ ____
-# | |      / \  |  _ \| __ ) ___|
-# | |     / _ \ | |_) |  _ \___ \
-# | |___ / ___ \|  _ <| |_) |__) |
-# |_____/_/   \_\_| \_\____/____/
-#
-# File originally by Luke Smith
-# Website: http://lukesmith.xyz
-# Email: luke@lukesmith.xyz
-# YouTube: https://youtube.com/c/LukeSmithxyz
-# Github: https://github.com/LukeSmithxyz
 
 # This config file will use environmental variables such as $BROWSER and $TERMINAL.
 # You can set these variables in ~/.profile or ~/.bash_profile if you have it as below:
@@ -31,6 +20,8 @@ set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
 
 # #---Starting External Scripts---# #
+# enable thinkpad dock daemon
+exec --no-startup-id dockd --daemon
 # Setting the background and colorscheme:
 #exec_always --no-startup-id wal -i ~/.config/wall.png
 exec --no-startup-id wal --theme gruvbox
@@ -57,7 +48,7 @@ exec --no-startup-id mpd
 # touchpad off
 exec --no-startup-id synclient TouchpadOff=1
 # key delay
-exec_always --no-startup-id xset r rate 200 40
+#exec_always --no-startup-id xset r rate 200 40
 
 # Set Xresources colors:
 set_from_resource $darkblack	color0  #000000

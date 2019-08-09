@@ -21,8 +21,8 @@ alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
 # Some aliases
 alias p="sudo pacman"
 alias SS="sudo systemctl"
-alias v="nvim"
-alias sv="sudo nvim"
+alias v="vis"
+alias sv="sudo vis"
 alias r="ranger"
 alias sr="sudo ranger"
 alias ka="killall"

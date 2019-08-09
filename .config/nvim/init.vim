@@ -57,6 +57,8 @@ if dein#load_state('~/.cache/dein')
 	call dein#add('Shougo/echodoc.vim')
 	call dein#add('Shougo/context_filetype.vim')
 	call dein#add('mattn/emmet-vim', {'on_ft':'html'})
+	call dein#add('vim-pandoc/vim-pandoc')
+	call dein#add('dhruvasagar/vim-table-mode', {'on_ft':'pandoc'})
 	""""""""""""""""""
 	"" Maker/linting "
 	""""""""""""""""""
@@ -80,6 +82,8 @@ if dein#load_state('~/.cache/dein')
 	call dein#add('hail2u/vim-css3-syntax',{'on_ft' : 'css' })
 	call dein#add('cakebaker/scss-syntax.vim',{'on_ft' : 'scss' })
 	call dein#add('posva/vim-vue',{'on_ft' : 'vue' })
+	call dein#add('ekalinin/Dockerfile.vim',{'on_ft' : 'dockerfile' })
+	call dein#add('vim-pandoc/vim-pandoc-syntax',{'on_ft' : 'pandoc' })
 	""""""""""""""""
 	"" formatting "'
 	""""""""""""""""
@@ -117,3 +121,4 @@ call s:source_rc('plugins/deoplete.rc.vim')
 call s:source_rc('plugins/neomake.rc.vim')
 call s:source_rc('plugins/neoformat.rc.vim')
 call s:source_rc('plugins/neosnippet.rc.vim')
+call s:source_rc('plugins/table-mode.rc.vim')

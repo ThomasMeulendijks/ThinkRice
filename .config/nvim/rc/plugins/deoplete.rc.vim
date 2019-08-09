@@ -6,5 +6,8 @@ call deoplete#custom#option({
 			\ 'refresh_always' : v:false,
 			\})
 
-			"\ 'omni_patterns':
-			"\ {'java': '[^. *\t]\.\w*'},
+"\ 'omni_patterns':
+"\ {'java': '[^. *\t]\.\w*'},
+call deoplete#custom#var('omni', 'input_patterns', {
+			\ 'pandoc': '@'
+			\})
